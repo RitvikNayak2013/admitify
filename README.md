@@ -1,33 +1,126 @@
 # Admitify
 
-Admitify is an AI-powered portfolio operating system that helps students turn dream university goals into a concrete academic, extracurricular, exam, project, and proof roadmap.
+Admitify is an AI-powered roadmap builder for students who want to work toward their dream universities in a realistic, ethical, and organized way.
 
-The MVP is intentionally ethical: it focuses on Dream Fit Readiness Score, profile strength, gap analysis, roadmaps, and verifiable achievements. It does not make guaranteed outcome claims.
+Instead of pretending to predict admission outcomes, Admitify helps students understand their current profile, identify gaps, and turn their goals into weekly actions across academics, exams, extracurriculars, projects, leadership, research, awards, and portfolio proof.
 
-## Quick Start
+Admitify is built for a hackathon demo, but the architecture is intentionally modular so real university data, counselor tools, authentication, and database persistence can be added later.
+
+## What Admitify Does
+
+Admitify helps a student answer:
+
+- What should I work on this week?
+- Which parts of my profile are strongest or weakest?
+- What proof do I need to collect for my achievements?
+- Which exams, projects, activities, and opportunities match my goals?
+- How can I build a stronger, more authentic university application over time?
+
+Admitify does **not** guarantee admission, calculate a "chance of admission," encourage fake achievements, or write dishonest application material.
+
+## Core Experience
+
+- Interactive first-run product tour
+- Demo profile for judges, guests, or non-students
+- Guided onboarding for real student profiles
+- Dream Fit Readiness Score
+- Explainable profile strength breakdown
+- Dream university explorer with editable sample data
+- Deterministic roadmap generator
+- Weekly action planning
+- Activity planner with improvement warnings
+- Portfolio Vault for proof of achievements
+- AI Coach with secure server-side OpenAI integration
+- Usage limits to protect API credits during demos
+- Local storage persistence for a no-login MVP
+
+## Demo Flow
+
+For the best hackathon walkthrough, open:
+
+```text
+/dashboard?tour=1
+```
+
+Suggested demo path:
+
+1. Start with the interactive intro tour.
+2. Choose the demo profile if the viewer is not a student.
+3. Show the dashboard and Dream Fit Readiness Score.
+4. Open the Roadmap and check off a task.
+5. Open Dream Schools and add a university.
+6. Open Activities and show how Admitify suggests stronger proof and measurable impact.
+7. Open the Portfolio Vault and add evidence.
+8. Open the AI Coach and ask: "What should I do this week?"
+
+## Tech Stack
+
+- Next.js App Router
+- TypeScript
+- Tailwind CSS
+- shadcn-style local UI components
+- Framer Motion
+- Recharts
+- Local JSON seed data
+- localStorage persistence
+- Optional OpenAI Responses API integration
+- Vercel-ready deployment
+
+## Main Routes
+
+| Route | Purpose |
+| --- | --- |
+| `/` | Opens the main app workspace |
+| `/dashboard` | Main student command center |
+| `/dashboard?tour=1` | Forces the interactive intro tour |
+| `/onboarding` | Guided student setup |
+| `/universities` | Dream university explorer |
+| `/profile-strength` | Detailed readiness breakdown |
+| `/roadmap` | Weekly and long-term roadmap |
+| `/activities` | Extracurricular planner |
+| `/exams` | Exam planner |
+| `/opportunities` | Opportunity matcher |
+| `/vault` | Portfolio proof vault |
+| `/counselor` | AI Coach |
+| `/settings` | Profile and demo settings |
+
+## Local Setup
+
+Install dependencies:
 
 ```bash
 npm install
+```
+
+Run the local development server:
+
+```bash
 npm run dev
 ```
 
-Then open:
+Open:
 
 ```text
 http://localhost:3000
 ```
 
-The default dev and build scripts use Webpack plus the installed SWC WASM fallback for this macOS workspace. If your machine has native Next/SWC working normally and you want Turbopack, run:
+Build for production:
 
 ```bash
-npm run dev:turbo
+npm run build
 ```
 
-## Secure OpenAI Setup
-
-`.env.local` is already created locally and ignored by Git. Add your real key there when ready:
+Run the production build locally:
 
 ```bash
+npm run start
+```
+
+## Environment Variables
+
+Create a local `.env.local` file. This file should **never** be committed to GitHub.
+
+```env
 OPENAI_API_KEY=your_api_key_here
 OPENAI_MODEL=gpt-5
 OPENAI_REASONING_EFFORT=minimal
@@ -40,55 +133,46 @@ AI_MAX_CONTEXT_CHARS=12000
 AI_MAX_OUTPUT_TOKENS=700
 ```
 
-Do not put the key in `.env.example`, source code, screenshots, or the README. `.gitignore` ignores `.env*` and explicitly allows only `.env.example`.
+Important:
 
-Set `AI_OPENAI_ENABLED=false` for zero-credit demo mode. If `OPENAI_API_KEY` is missing, an API call fails, or quota is reached, Admitify returns deterministic fallback guidance so the demo still works.
+- Use `OPENAI_API_KEY`, not `NEXT_PUBLIC_OPENAI_API_KEY`.
+- Never paste your real API key into source code, screenshots, commits, README files, or public issues.
+- `.env.local` is ignored by Git.
+- `.env.example` is safe to commit because it contains no real secrets.
 
-Usage limits are enforced server-side in `lib/ai/usage-limit.ts` before any OpenAI call:
+## AI Credit Protection
 
-- Demo-wide daily limit
-- Per-visitor daily limit
+Admitify includes server-side usage limits before any OpenAI request is made.
+
+The current demo controls include:
+
+- Global daily AI request limit
+- Per-visitor daily AI request limit
 - Cooldown between requests
-- Context truncation
-- Output token cap
+- Maximum context size
+- Maximum output tokens
+- Deterministic fallback responses when the API key is missing, disabled, rate-limited, or unavailable
 
-## Demo Flow
+To disable paid AI calls completely:
 
-First launch opens a short interactive tour. Judges can:
+```env
+AI_OPENAI_ENABLED=false
+```
 
-- Use the demo profile if they are not a student
-- Start onboarding if they want to enter their own profile
-- Explore the dashboard, roadmap, dream schools, activities, proof vault, and AI coach
+The app will still work using mock counselor responses.
 
-To show the tour again, clear local storage for the site or remove `admitify.tour.seen`.
+## Deploying to Vercel
 
-## Included MVP Features
+1. Push the project to GitHub.
+2. Go to Vercel and import the GitHub repository.
+3. Keep the framework preset as `Next.js`.
+4. Add the environment variables from the section above in Vercel Project Settings.
+5. Deploy.
+6. Visit the production URL Vercel provides.
 
-- App-first home route at `/` that opens the student workspace
-- First-run interactive tour with one-click demo profile
-- Multi-step onboarding at `/onboarding`
-- Calm dashboard with Dream Fit Readiness Score, next best move, focus modes, three weekly actions, target schools, and weakest areas
-- Dream university explorer with 70+ editable sample universities, visual logos, quick country chips, advanced filters, and progressive loading
-- Deterministic roadmap action board with one active timeframe, task completion, priorities, hours, deadlines, and evidence prompts
-- Extracurricular planner with a master-detail editor, depth scores, warnings, and improvement suggestions
-- Portfolio Vault with a master-detail proof editor and proof strength scoring
-- AI Coach chat with secure API route, quota limits, cooldown UI, and mock fallback
-- Settings page for profile basics, targets, weekly hours, and application year
-- Supporting pages for profile strength, exams, and opportunities remain available by direct route for demo depth
+Do not put the OpenAI key in GitHub. Add it only in Vercel's Environment Variables panel.
 
-## Tech Stack
-
-- Next.js App Router
-- TypeScript
-- Tailwind CSS
-- shadcn-style local UI primitives
-- Framer Motion
-- Recharts
-- Local JSON seed data
-- localStorage persistence through a replaceable storage abstraction
-- Optional OpenAI Responses API route
-
-## Data and Scoring
+## Data and Architecture
 
 Seed data lives in:
 
@@ -97,19 +181,29 @@ Seed data lives in:
 - `lib/seed/opportunities.ts`
 - `lib/seed/sampleProfile.ts`
 
-Scoring lives in:
+Core product logic lives in:
 
 - `lib/scoring.ts`
-
-Roadmap generation lives in:
-
 - `lib/roadmap.ts`
-
-Storage lives in:
-
 - `lib/storage.ts`
+- `lib/types.ts`
 
-The scoring engine is deterministic and explainable. Overall readiness uses:
+AI logic lives in:
+
+- `app/api/counselor/route.ts`
+- `app/api/ai/status/route.ts`
+- `lib/ai/server.ts`
+- `lib/ai/usage-limit.ts`
+
+The MVP uses local storage through a small storage abstraction, which makes it easier to replace with Supabase or another database later.
+
+## Scoring Philosophy
+
+Admitify uses deterministic, explainable readiness scoring.
+
+The score is not an admission probability. It is a planning tool that helps students see which areas need more work.
+
+Overall readiness is weighted as:
 
 - Academics: 25
 - Tests: 15
@@ -119,15 +213,22 @@ The scoring engine is deterministic and explainable. Overall readiness uses:
 - Leadership: 10
 - Narrative fit: 5
 
-## Switching From localStorage to Supabase Later
+Every score includes:
 
-The MVP keeps persistence behind `lib/storage.ts`. To add Supabase:
+- Numeric score
+- Label
+- Explanation
+- Recommended improvements
 
-1. Create Supabase tables for `profiles`, `roadmap_tasks`, `vault_items`, `activities`, `exam_plans`, and `saved_opportunities`.
-2. Replace `loadProfile`, `saveProfile`, `loadRoadmap`, and `saveRoadmap` with async Supabase calls.
-3. Add authentication and map the authenticated user id to `StudentProfile.id`.
-4. Move the `useProfile` hook to fetch from Supabase on session load.
-5. Keep the TypeScript models in `lib/types.ts` as the contract between UI, scoring, roadmap, and database.
+## Switching to Supabase Later
+
+To move from local storage to Supabase:
+
+1. Create tables for profiles, roadmap tasks, activities, vault items, exams, opportunities, and saved universities.
+2. Add Supabase authentication.
+3. Store each student's data under their authenticated user id.
+4. Replace the functions in `lib/storage.ts` with Supabase queries.
+5. Keep the TypeScript types in `lib/types.ts` as the shared contract between UI, scoring, roadmap generation, and database code.
 
 ## Future Improvements
 
@@ -139,7 +240,13 @@ The MVP keeps persistence behind `lib/storage.ts`. To add Supabase:
 - Parent dashboard
 - Deadline notification system
 - AI opportunity search
-- Essay review system
+- Essay review system with ethics guardrails
 - Scholarship matching
 - Recommendation letter tracker
 - Public student portfolio export
+
+## Project Positioning
+
+Admitify is designed to help students build real achievements and stronger habits over time.
+
+It should be used as a planning assistant, not as an admissions predictor. The product encourages honest work, measurable impact, clear proof, and realistic next steps.
