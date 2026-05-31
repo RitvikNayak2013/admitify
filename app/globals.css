@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 190 28% 97%;
+  --foreground: 220 32% 12%;
+  --card: 0 0% 100%;
+  --card-foreground: 220 32% 12%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 220 32% 12%;
+  --primary: 178 66% 28%;
+  --primary-foreground: 180 100% 98%;
+  --secondary: 218 22% 92%;
+  --secondary-foreground: 220 32% 12%;
+  --muted: 214 22% 93%;
+  --muted-foreground: 219 13% 40%;
+  --accent: 43 95% 56%;
+  --accent-foreground: 31 40% 12%;
+  --destructive: 0 76% 52%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 218 22% 86%;
+  --input: 218 22% 86%;
+  --ring: 178 66% 28%;
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 15% 5%, rgba(15, 118, 110, 0.08), transparent 28%),
+    radial-gradient(circle at 80% 0%, rgba(245, 158, 11, 0.1), transparent 25%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(238, 247, 245, 0.9)),
+    hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.premium-grid {
+  background-image:
+    linear-gradient(rgba(21, 94, 117, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(21, 94, 117, 0.06) 1px, transparent 1px);
+  background-size: 42px 42px;
+}
+
+.app-noise {
+  background-image:
+    linear-gradient(rgba(15, 118, 110, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 118, 110, 0.045) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.scrollbar-soft::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.scrollbar-soft::-webkit-scrollbar-thumb {
+  background: rgba(15, 118, 110, 0.25);
+  border-radius: 999px;
+}
+
+@layer components {
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+  }
+
+  .premium-card {
+    @apply rounded-lg border bg-white/90 shadow-sm backdrop-blur;
+  }
+
+  .interactive-card {
+    @apply transition duration-200 hover:-translate-y-0.5 hover:border-primary/35 hover:shadow-soft;
+  }
+
+  .section-kicker {
+    @apply text-xs font-semibold uppercase tracking-normal text-muted-foreground;
+  }
+}
