@@ -65,10 +65,10 @@ export function getAiUsageConfig() {
   return {
     openAiEnabled: process.env.AI_OPENAI_ENABLED !== "false",
     dailyGlobalLimit: numberEnv("AI_DAILY_REQUEST_LIMIT", 40),
-    dailyClientLimit: numberEnv("AI_DAILY_REQUEST_LIMIT_PER_CLIENT", 8),
-    minSecondsBetweenClientRequests: numberEnv("AI_MIN_SECONDS_BETWEEN_REQUESTS", 15),
-    maxContextChars: numberEnv("AI_MAX_CONTEXT_CHARS", 12000),
-    maxOutputTokens: numberEnv("AI_MAX_OUTPUT_TOKENS", 700)
+    dailyClientLimit: numberEnv("AI_DAILY_REQUEST_LIMIT_PER_CLIENT", 5),
+    minSecondsBetweenClientRequests: numberEnv("AI_MIN_SECONDS_BETWEEN_REQUESTS", 12),
+    maxContextChars: numberEnv("AI_MAX_CONTEXT_CHARS", 16000),
+    maxOutputTokens: numberEnv("AI_MAX_OUTPUT_TOKENS", 1200)
   };
 }
 

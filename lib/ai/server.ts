@@ -18,29 +18,46 @@ const responseSchema = {
   type: "object",
   additionalProperties: false,
   properties: {
-    title: { type: "string", maxLength: 80 },
-    summary: { type: "string", maxLength: 360 },
+    title: { type: "string", description: "A short heading for the coach response." },
+    summary: { type: "string", description: "A concise, student-friendly answer in two or three sentences." },
     insights: {
       type: "array",
-      minItems: 3,
-      maxItems: 5,
-      items: { type: "string", maxLength: 160 }
+      items: { type: "string", description: "One specific observation about the student's profile or question." }
     },
     actions: {
       type: "array",
-      minItems: 3,
-      maxItems: 5,
-      items: { type: "string", maxLength: 160 }
+      items: { type: "string", description: "One concrete next step the student can complete honestly." }
     },
     cautions: {
       type: "array",
-      minItems: 1,
-      maxItems: 3,
-      items: { type: "string", maxLength: 160 }
+      items: { type: "string", description: "One ethical or realism guardrail to keep in mind." }
     }
   },
   required: ["title", "summary", "insights", "actions", "cautions"]
 };
+
+function normalizeReasoningEffort(model: string, effort: string) {
+  const requested = effort.trim().toLowerCase();
+  if (model.includes("gpt-5.1") && requested === "minimal") {
+    return "low";
+  }
+  return requested;
+}
+
+function supportsReasoningParameter(model: string) {
+  const normalized = model.toLowerCase();
+  return normalized.startsWith("gpt-5") || normalized.startsWith("o");
+}
+
+function extractOpenAiErrorMessage(errorText: string) {
+  if (!errorText) return "";
+  try {
+    const parsed = JSON.parse(errorText) as { error?: { message?: string } };
+    return parsed.error?.message?.slice(0, 240) ?? "";
+  } catch {
+    return errorText.slice(0, 240);
+  }
+}
 
 function promptForKind(kind: AiCoachKind) {
   const prompts: Record<AiCoachKind, string> = {
@@ -142,6 +159,35 @@ export async function createAiCoachResponse(request: AiCoachRequest): Promise<Ai
   };
   const studentContextText = truncateForAi(studentContext);
   const maxOutputTokens = getAiUsageConfig().maxOutputTokens;
+  const requestBody: Record<string, unknown> = {
+    model,
+    max_output_tokens: maxOutputTokens,
+    text: {
+      format: {
+        type: "json_schema",
+        name: "admitify_ai_coach",
+        strict: true,
+        schema: responseSchema
+      }
+    },
+    input: [
+      {
+        role: "system",
+        content: ethicalSystemPrompt
+      },
+      {
+        role: "user",
+        content: `${promptForKind(request.kind)}
+
+Return only JSON matching the schema. Keep the response compact: 1 short title, 1 short summary, 3 insights, 3 actions, and 1 caution. Student/context data:
+${studentContextText}`
+      }
+    ]
+  };
+
+  if (supportsReasoningParameter(model)) {
+    requestBody.reasoning = { effort: normalizeReasoningEffort(model, effort) };
+  }
 
   try {
     const response = await fetch("https://api.openai.com/v1/responses", {
@@ -150,46 +196,34 @@ export async function createAiCoachResponse(request: AiCoachRequest): Promise<Ai
         "Content-Type": "application/json",
         Authorization: `Bearer ${apiKey}`
       },
-      body: JSON.stringify({
-        model,
-        reasoning: { effort },
-        max_output_tokens: maxOutputTokens,
-        text: {
-          format: {
-            type: "json_schema",
-            name: "admitify_ai_coach",
-            strict: true,
-            schema: responseSchema
-          }
-        },
-        input: [
-          {
-            role: "system",
-            content: ethicalSystemPrompt
-          },
-          {
-            role: "user",
-            content: `${promptForKind(request.kind)}
-
-Return only JSON matching the schema. Keep every field short and concrete. Student/context data:
-${studentContextText}`
-          }
-        ]
-      })
+      body: JSON.stringify(requestBody)
     });
 
     if (!response.ok) {
       const errorText = await response.text().catch(() => "");
+      const errorMessage = extractOpenAiErrorMessage(errorText);
       return {
         ...mockAiCoach(request.kind, request.profile, request.prompt),
         source: "api_error",
-        limitReason: `OpenAI request failed with status ${response.status}.`,
-        summary: `OpenAI is configured, but the request failed with status ${response.status}. Admitify used fallback guidance. ${errorText ? "Check your key, model name, billing, and project access." : ""}`
+        limitReason: errorMessage
+          ? `OpenAI request failed with status ${response.status}: ${errorMessage}`
+          : `OpenAI request failed with status ${response.status}.`,
+        summary:
+          "OpenAI is configured, but the request failed before the coach could answer. Admitify used fallback guidance while keeping the demo usable."
       };
     }
 
     const data = await response.json();
     const outputText = extractResponseText(data);
+    if (!outputText) {
+      return {
+        ...mockAiCoach(request.kind, request.profile, request.prompt),
+        source: "api_error",
+        limitReason: "OpenAI returned an empty or incomplete response.",
+        summary:
+          "OpenAI connected, but the response came back empty or incomplete. Increase `AI_MAX_OUTPUT_TOKENS` slightly or try a shorter question."
+      };
+    }
     const parsed = JSON.parse(outputText);
     const normalized = normalizeParsed(parsed, "openai", model) ?? mockAiCoach(request.kind, request.profile, request.prompt);
     return {
