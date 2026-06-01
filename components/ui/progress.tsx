@@ -11,9 +11,9 @@ export function Progress({
   indicatorClassName?: string;
 }) {
   return (
-    <div className={cn("h-2 w-full overflow-hidden rounded-md bg-secondary", className)}>
+    <div className={cn("h-2 w-full overflow-hidden rounded-md bg-slate-200/80 shadow-inner", className)}>
       <div
-        className={cn("h-full rounded-md bg-primary transition-all", indicatorClassName)}
+        className={cn("h-full rounded-md bg-gradient-to-r from-cyan-700 via-cyan-500 to-amber-400 transition-all", indicatorClassName)}
         style={{ width: `${Math.min(100, Math.max(0, value))}%` }}
       />
     </div>

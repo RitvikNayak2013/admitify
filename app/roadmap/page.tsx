@@ -137,18 +137,18 @@ export default function RoadmapPage() {
   return (
     <AppShell title="Roadmap" subtitle="Pick one timeframe. Finish the next useful proof-building tasks.">
       <div className="grid min-w-0 gap-5">
-        <section className="overflow-hidden rounded-lg bg-slate-950 text-white shadow-soft">
-          <div className="grid gap-6 p-6 md:grid-cols-[minmax(0,1fr)_260px] md:p-8">
+        <section className="hero-metal">
+          <div className="relative z-10 grid gap-6 p-6 md:grid-cols-[minmax(0,1fr)_260px] md:p-8">
             <div className="min-w-0">
               <Badge variant="warning">Action board</Badge>
               <h2 className="mt-4 max-w-2xl break-words text-3xl font-bold tracking-normal md:text-4xl">
-                Work the next milestone, not the whole admissions universe.
+                Work the next milestone, not the whole application universe.
               </h2>
               <p className="mt-3 max-w-xl text-sm leading-6 text-slate-300">
                 Your roadmap is grouped by time so each session has a clear finish line.
               </p>
             </div>
-            <div className="rounded-lg border border-white/10 bg-white/10 p-4">
+            <div className="rounded-lg border border-white/10 bg-white/[0.08] p-4 backdrop-blur">
               <div className="flex items-center justify-between text-sm font-semibold">
                 <span>{progress}% complete</span>
                 <span>{profile.weeklyAvailableHours}h/week</span>
@@ -174,7 +174,7 @@ export default function RoadmapPage() {
                     key={timeframe}
                     onClick={() => setActiveTimeframe(timeframe)}
                     className={`rounded-md border p-3 text-left transition ${
-                      active ? "border-slate-950 bg-slate-950 text-white shadow-sm" : "bg-white hover:border-primary/40 hover:bg-slate-50"
+                      active ? "border-slate-950 bg-slate-950 text-white shadow-metal" : "bg-white/[0.72] hover:border-cyan-700/40 hover:bg-white"
                     }`}
                   >
                     <span className="block text-sm font-semibold">{timeframe}</span>

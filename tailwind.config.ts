@@ -42,7 +42,9 @@ const config: Config = {
         }
       },
       boxShadow: {
-        soft: "0 18px 60px rgba(16, 24, 40, 0.08)"
+        soft: "0 18px 60px rgba(16, 24, 40, 0.08)",
+        metal: "0 18px 50px rgba(15, 23, 42, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.72)",
+        "metal-lg": "0 26px 90px rgba(15, 23, 42, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.18)"
       },
       fontFamily: {
         sans: [

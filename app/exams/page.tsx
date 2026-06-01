@@ -76,7 +76,7 @@ export default function ExamsPage() {
               {profile.plannedExams.map((plan) => {
                 const exam = exams.find((item) => item.id === plan.examId);
                 return (
-                  <div key={plan.id} className="rounded-lg border bg-slate-50 p-4">
+                  <div key={plan.id} className="rounded-lg border bg-white/70 p-4 shadow-sm">
                     <div className="flex items-start justify-between gap-3">
                       <div>
                         <p className="font-semibold">{exam?.name ?? plan.examId}</p>
@@ -111,17 +111,17 @@ export default function ExamsPage() {
             </CardContent>
           </Card>
 
-          <Card className="bg-slate-950 text-white">
+          <Card className="metal-panel">
             <CardHeader>
-              <CardTitle>Exam strategy</CardTitle>
+              <CardTitle className="text-white">Exam strategy</CardTitle>
               <CardDescription className="text-slate-300">
                 Prioritize exams that match your target countries, major, language requirements, and available preparation time.
               </CardDescription>
             </CardHeader>
             <CardContent className="grid gap-3 md:grid-cols-2">
               {["Confirm official requirements", "Use diagnostics weekly", "Collect score proof", "Avoid overtesting"].map((item) => (
-                <div key={item} className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/10 p-3 text-sm">
-                  <Check className="h-4 w-4 text-teal-200" />
+                <div key={item} className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.08] p-3 text-sm">
+                  <Check className="h-4 w-4 text-cyan-200" />
                   {item}
                 </div>
               ))}
@@ -133,7 +133,7 @@ export default function ExamsPage() {
           {recommended.map(({ exam, recommended: isRecommended }) => {
             const planned = profile.plannedExams.some((plan) => plan.examId === exam.id);
             return (
-              <Card key={exam.id} className={isRecommended ? "border-primary/40 bg-white" : "bg-white"}>
+              <Card key={exam.id} className={isRecommended ? "border-cyan-700/40 bg-white/[0.82]" : "bg-white/[0.78]"}>
                 <CardHeader>
                   <div className="flex items-start justify-between gap-4">
                     <div>
@@ -160,7 +160,7 @@ export default function ExamsPage() {
                     <p className="text-xs font-semibold uppercase tracking-normal text-muted-foreground">Relevant majors</p>
                     <p className="mt-1 text-sm">{exam.relevantMajors.join(", ")}</p>
                   </div>
-                  <div className="rounded-lg border bg-slate-50 p-3">
+                  <div className="rounded-lg border bg-white/70 p-3 shadow-sm">
                     <p className="text-xs font-semibold uppercase tracking-normal text-muted-foreground">Ideal target score</p>
                     <p className="mt-1 text-sm leading-6">{exam.idealTargetScore}</p>
                   </div>

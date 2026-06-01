@@ -97,7 +97,7 @@ export default function OpportunitiesPage() {
           {filtered.map((opportunity) => {
             const saved = profile.savedOpportunityIds.includes(opportunity.id);
             return (
-              <Card key={opportunity.id} className="bg-white">
+              <Card key={opportunity.id} className="interactive-card bg-white/[0.78]">
                 <CardHeader>
                   <div className="flex items-start justify-between gap-4">
                     <div>
@@ -118,15 +118,15 @@ export default function OpportunitiesPage() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="grid gap-3 md:grid-cols-3">
-                    <div className="rounded-lg border bg-slate-50 p-3">
+                    <div className="rounded-lg border bg-white/70 p-3 shadow-sm">
                       <p className="text-xs font-semibold uppercase tracking-normal text-muted-foreground">Country</p>
                       <p className="mt-1 text-sm">{opportunity.country}</p>
                     </div>
-                    <div className="rounded-lg border bg-slate-50 p-3">
+                    <div className="rounded-lg border bg-white/70 p-3 shadow-sm">
                       <p className="text-xs font-semibold uppercase tracking-normal text-muted-foreground">Deadline</p>
                       <p className="mt-1 text-sm">{formatDate(opportunity.deadline)}</p>
                     </div>
-                    <div className="rounded-lg border bg-slate-50 p-3">
+                    <div className="rounded-lg border bg-white/70 p-3 shadow-sm">
                       <p className="text-xs font-semibold uppercase tracking-normal text-muted-foreground">Age range</p>
                       <p className="mt-1 text-sm">{opportunity.ageRange}</p>
                     </div>

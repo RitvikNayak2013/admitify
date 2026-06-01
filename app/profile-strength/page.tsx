@@ -108,9 +108,9 @@ export default function ProfileStrengthPage() {
           ))}
         </section>
 
-        <Card className="bg-slate-950 text-white">
+        <Card className="metal-panel">
           <CardHeader>
-            <CardTitle>
+            <CardTitle className="text-white">
               <Term label="Gap analysis">A list of the biggest differences between your current profile and what your goals ask you to build.</Term>
             </CardTitle>
             <CardDescription className="text-slate-300">
@@ -119,7 +119,7 @@ export default function ProfileStrengthPage() {
           </CardHeader>
           <CardContent className="grid gap-3 md:grid-cols-3">
             {gapAnalysis.gaps.slice(0, 3).map((gap) => (
-              <div key={gap.category} className="rounded-lg border border-white/10 bg-white/10 p-4">
+              <div key={gap.category} className="rounded-lg border border-white/10 bg-white/[0.08] p-4 backdrop-blur">
                 <Badge variant={gap.severity === "High" ? "rose" : gap.severity === "Medium" ? "warning" : "success"}>{gap.severity}</Badge>
                 <p className="mt-3 font-semibold">{gap.category}</p>
                 <p className="mt-2 text-sm leading-6 text-slate-300">{gap.nextStep}</p>

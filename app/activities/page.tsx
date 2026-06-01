@@ -93,8 +93,8 @@ export default function ActivitiesPage() {
   return (
     <AppShell title="Activities" subtitle="Strengthen one meaningful activity at a time.">
       <div className="grid min-w-0 gap-5">
-        <section className="overflow-hidden rounded-lg bg-slate-950 text-white shadow-soft">
-          <div className="flex flex-col gap-5 p-6 md:flex-row md:items-end md:justify-between">
+        <section className="hero-metal">
+          <div className="relative z-10 flex flex-col gap-5 p-6 md:flex-row md:items-end md:justify-between">
             <div>
               <Badge variant="warning">Depth over clutter</Badge>
               <h2 className="mt-4 text-3xl font-bold tracking-normal">Make activities prove impact.</h2>
@@ -121,7 +121,7 @@ export default function ActivitiesPage() {
                       key={activity.id}
                       onClick={() => setSelectedId(activity.id)}
                       className={`rounded-md border p-3 text-left transition ${
-                        active ? "border-slate-950 bg-slate-950 text-white" : "bg-white hover:border-primary/40 hover:bg-slate-50"
+                        active ? "border-slate-950 bg-slate-950 text-white shadow-metal" : "bg-white/[0.72] hover:border-cyan-700/40 hover:bg-white"
                       }`}
                     >
                       <span className="block truncate text-sm font-semibold">{activity.name}</span>
@@ -145,7 +145,7 @@ export default function ActivitiesPage() {
           </Card>
 
           {selected ? (
-            <Card className="bg-white">
+            <Card className="bg-white/[0.82]">
               <CardContent className="grid gap-6 p-5">
                 <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                   <div>
@@ -232,7 +232,7 @@ export default function ActivitiesPage() {
                     ["Uniqueness", "uniquenessScore"],
                     ["Proof", "proofScore"]
                   ].map(([label, key]) => (
-                    <div key={key} className="rounded-lg border bg-slate-50 p-3">
+                    <div key={key} className="rounded-lg border bg-white/70 p-3 shadow-sm">
                       <div className="mb-2 flex items-center justify-between text-sm font-medium">
                         <span>{label}</span>
                         <span>{selected[key as keyof Activity] as number}</span>

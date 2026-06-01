@@ -87,8 +87,8 @@ export default function VaultPage() {
   return (
     <AppShell title="Proof Vault" subtitle="Keep the evidence behind your strongest claims.">
       <div className="grid min-w-0 gap-5">
-        <section className="overflow-hidden rounded-lg bg-slate-950 text-white shadow-soft">
-          <div className="grid gap-5 p-6 md:grid-cols-[1fr_220px] md:items-end md:p-8">
+        <section className="hero-metal">
+          <div className="relative z-10 grid gap-5 p-6 md:grid-cols-[1fr_220px] md:items-end md:p-8">
             <div>
               <Badge variant="warning">Proof first</Badge>
               <h2 className="mt-4 text-3xl font-bold tracking-normal">Save evidence while you build.</h2>
@@ -96,7 +96,7 @@ export default function VaultPage() {
                 A strong portfolio is not louder. It is easier to verify.
               </p>
             </div>
-            <div className="rounded-lg border border-white/10 bg-white/10 p-4">
+            <div className="rounded-lg border border-white/10 bg-white/[0.08] p-4 backdrop-blur">
               <div className="flex items-center justify-between text-sm font-semibold">
                 <span>
                   <Term label="Proof strength">How verifiable and useful your stored evidence is.</Term>
@@ -124,7 +124,7 @@ export default function VaultPage() {
                       key={item.id}
                       onClick={() => setSelectedId(item.id)}
                       className={`rounded-md border p-3 text-left transition ${
-                        active ? "border-slate-950 bg-slate-950 text-white" : "bg-white hover:border-primary/40 hover:bg-slate-50"
+                        active ? "border-slate-950 bg-slate-950 text-white shadow-metal" : "bg-white/[0.72] hover:border-cyan-700/40 hover:bg-white"
                       }`}
                     >
                       <span className="block truncate text-sm font-semibold">{item.title}</span>
@@ -148,7 +148,7 @@ export default function VaultPage() {
           </Card>
 
           {selected ? (
-            <Card className="bg-white">
+            <Card className="bg-white/[0.82]">
               <CardContent className="grid gap-6 p-5">
                 <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                   <div>
@@ -216,7 +216,7 @@ export default function VaultPage() {
                       placeholder="What is this, what did you do, what result does it verify?"
                     />
                   </div>
-                  <div className="rounded-lg border bg-slate-50 p-4">
+                  <div className="rounded-lg border bg-white/70 p-4 shadow-sm">
                     <div className="mb-3 flex items-center justify-between text-sm font-medium">
                       <span>Strength score</span>
                       <span>{selected.strengthScore}</span>

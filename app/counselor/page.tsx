@@ -123,22 +123,38 @@ export default function CounselorPage() {
   return (
     <AppShell title="Coach" subtitle="A practical mentor for the next honest step.">
       <div className="grid min-w-0 gap-5 2xl:grid-cols-[minmax(0,1fr)_320px]">
-        <Card className="min-h-[700px]">
-          <CardHeader>
+        <Card className="min-h-[700px] overflow-hidden bg-white/[0.82]">
+          <CardHeader className="hero-metal rounded-none border-0">
+            <div className="relative z-10">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <CardTitle>Admitify Coach</CardTitle>
-                <CardDescription>Ask a normal question. The answer should feel like a good counselor, not a brochure.</CardDescription>
+                <CardTitle className="text-white">Admitify AI Coach</CardTitle>
+                <CardDescription className="text-slate-300">Ask one real question. Get one useful direction, not a brochure.</CardDescription>
               </div>
               <Badge variant={aiStatus?.configured && aiStatus.enabled ? "success" : "warning"}>
                 {aiStatus?.configured && aiStatus.enabled ? "OpenAI ready" : "Key needed"}
               </Badge>
             </div>
+            <div className="mt-5 grid gap-3 md:grid-cols-3">
+              <div className="rounded-lg border border-white/10 bg-white/[0.08] p-3 text-sm text-slate-200">
+                <span className="font-semibold text-white">Specific</span>
+                <p className="mt-1 text-xs text-slate-400">Answers focus on the next practical step.</p>
+              </div>
+              <div className="rounded-lg border border-white/10 bg-white/[0.08] p-3 text-sm text-slate-200">
+                <span className="font-semibold text-white">Proof-led</span>
+                <p className="mt-1 text-xs text-slate-400">Advice points toward evidence you can show.</p>
+              </div>
+              <div className="rounded-lg border border-white/10 bg-white/[0.08] p-3 text-sm text-slate-200">
+                <span className="font-semibold text-white">Guarded</span>
+                <p className="mt-1 text-xs text-slate-400">No fake claims or guaranteed outcomes.</p>
+              </div>
+            </div>
+            </div>
           </CardHeader>
           <CardContent className="flex min-h-[570px] flex-col">
             <div
-              className={`mb-4 rounded-lg border p-4 ${
-                aiStatus?.configured && aiStatus.enabled ? "border-emerald-200 bg-emerald-50" : "border-amber-200 bg-amber-50"
+              className={`mb-4 rounded-lg border p-4 shadow-sm ${
+                aiStatus?.configured && aiStatus.enabled ? "border-emerald-200 bg-emerald-50/90" : "border-amber-200 bg-amber-50/90"
               }`}
             >
               <div className="flex items-start gap-3">
@@ -159,7 +175,7 @@ export default function CounselorPage() {
                 </div>
               </div>
             </div>
-            <div className="mb-4 grid gap-3 rounded-lg border bg-slate-50 p-3 md:grid-cols-3">
+            <div className="mb-4 grid gap-3 rounded-lg border bg-white/70 p-3 shadow-sm md:grid-cols-3">
               <div className="flex items-center gap-2 text-sm">
                 <ShieldCheck className="h-4 w-4 text-primary" />
                 <span className="font-semibold">Ethical coach</span>
@@ -184,7 +200,7 @@ export default function CounselorPage() {
                 {limitReason} Fallback guidance stays available for the demo.
               </div>
             ) : null}
-            <div className="scrollbar-soft flex-1 space-y-4 overflow-y-auto rounded-lg border bg-slate-50 p-4">
+            <div className="scrollbar-soft flex-1 space-y-4 overflow-y-auto rounded-lg border bg-gradient-to-br from-slate-50 via-white to-slate-100 p-4 shadow-inner">
               {messages.map((message, index) => (
                 <div key={`${message.role}-${index}`} className={`flex gap-3 ${message.role === "user" ? "justify-end" : "justify-start"}`}>
                   {message.role === "assistant" ? (
@@ -193,8 +209,8 @@ export default function CounselorPage() {
                     </div>
                   ) : null}
                   <div
-                    className={`max-w-[82%] whitespace-pre-line rounded-lg border p-3 text-sm leading-6 ${
-                      message.role === "user" ? "bg-primary text-primary-foreground" : "bg-white"
+                    className={`max-w-[82%] whitespace-pre-line rounded-lg border p-3 text-sm leading-6 shadow-sm ${
+                      message.role === "user" ? "border-cyan-800 bg-slate-950 text-white" : "bg-white"
                     }`}
                   >
                     {message.content}
@@ -260,9 +276,9 @@ export default function CounselorPage() {
               <p>When limits are hit, the app uses deterministic fallback advice.</p>
             </CardContent>
           </Card>
-          <Card className="bg-slate-950 text-white">
+          <Card className="metal-panel">
             <CardHeader>
-              <CardTitle>Guardrails</CardTitle>
+              <CardTitle className="text-white">Guardrails</CardTitle>
               <CardDescription className="text-slate-300">The counselor is built for real work and honest proof.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-3 text-sm leading-6 text-slate-300">

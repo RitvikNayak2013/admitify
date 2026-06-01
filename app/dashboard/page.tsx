@@ -7,7 +7,6 @@ import { ArrowRight, CheckCircle2, Circle, Clock3, GraduationCap, Sparkles, Targ
 import { AppShell } from "@/components/app-shell";
 import { InfoTip, Term } from "@/components/info-tip";
 import { ScoreRing } from "@/components/score-ring";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -80,21 +79,25 @@ export default function DashboardPage() {
   }
 
   return (
-    <AppShell title="Home" subtitle="A calm weekly plan for building a stronger dream-school profile.">
+    <AppShell title="Command" subtitle="A weekly operating layer for building real evidence toward ambitious universities.">
       <WelcomeTour onUseDemoProfile={useDemoProfile} />
       <div className="grid min-w-0 gap-5">
         <section className="grid min-w-0 gap-5 2xl:grid-cols-[minmax(0,1fr)_360px]">
-          <div className="overflow-hidden rounded-lg bg-slate-950 text-white shadow-soft">
-            <div className="grid gap-6 p-6 md:grid-cols-[minmax(0,1fr)_220px] md:p-8">
+          <div className="hero-metal">
+            <div className="relative z-10 grid gap-6 p-6 md:grid-cols-[minmax(0,1fr)_250px] md:p-8">
               <div className="min-w-0">
-                <Badge variant="warning">This week</Badge>
-                <h2 className="mt-5 max-w-2xl break-words text-3xl font-bold tracking-normal md:text-4xl">
-                  Get closer to {topTargets[0]?.name ?? "your dream university"} by building real proof.
+                <div className="flex flex-wrap gap-2">
+                  <span className="metal-chip">Live roadmap</span>
+                  <span className="metal-chip">{profile.weeklyAvailableHours}h/week</span>
+                  <span className="metal-chip">{targetUniversities.length || 0} target schools</span>
+                </div>
+                <h2 className="mt-6 max-w-3xl break-words text-3xl font-bold tracking-normal md:text-5xl">
+                  Turn {topTargets[0]?.name ?? "your dream school"} into the next proof-backed move.
                 </h2>
-                <p className="mt-4 max-w-xl text-sm leading-7 text-slate-300">
-                  One clear goal. One gap to close. A few actions you can actually finish.
+                <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-300 md:text-base">
+                  Admitify reads your goals, profile, and evidence, then keeps the week focused on work a real student can actually complete.
                 </p>
-                <div className="mt-6 flex flex-wrap gap-3">
+                <div className="mt-7 flex flex-wrap gap-3">
                   <Link href="/roadmap">
                     <Button variant="accent">
                       Open roadmap
@@ -107,8 +110,20 @@ export default function DashboardPage() {
                     </Button>
                   </Link>
                 </div>
+                <div className="mt-7 grid gap-3 sm:grid-cols-3">
+                  {[
+                    ["Focus", activeFocus.label],
+                    ["Gap", gapAnalysis.biggestGap],
+                    ["Next", nextTask?.category ?? "Proof"]
+                  ].map(([label, value]) => (
+                    <div key={label} className="rounded-lg border border-white/10 bg-white/[0.08] p-3 backdrop-blur">
+                      <p className="text-xs font-semibold uppercase text-slate-400">{label}</p>
+                      <p className="mt-1 truncate text-sm font-semibold text-white">{value}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div className="grid place-items-center rounded-lg border border-white/10 bg-white/10 p-5">
+              <div className="grid place-items-center rounded-lg border border-white/10 bg-white/[0.08] p-5 backdrop-blur">
                 <ScoreRing score={readiness.overall.numeric} />
                 <p className="mt-3 inline-flex items-center gap-1.5 text-center text-xs font-medium uppercase text-slate-300">
                   Readiness score
@@ -122,11 +137,18 @@ export default function DashboardPage() {
 
           <Card className="interactive-card">
             <CardContent className="p-5">
-              <p className="section-kicker">Next best move</p>
-              <h3 className="mt-3 text-xl font-semibold">{nextTask?.title ?? "Add your first roadmap task"}</h3>
-              <div className="mt-4 flex items-center gap-2 text-sm text-muted-foreground">
-                <Clock3 className="h-4 w-4 text-primary" />
-                {nextTask?.estimatedHours ?? 2} hours
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <p className="section-kicker">Next best move</p>
+                  <h3 className="mt-3 text-xl font-semibold text-slate-950">{nextTask?.title ?? "Add your first roadmap task"}</h3>
+                </div>
+                <div className="grid h-10 w-10 place-items-center rounded-lg bg-cyan-50 text-cyan-800">
+                  <Target className="h-5 w-5" />
+                </div>
+              </div>
+              <div className="mt-4 inline-flex items-center gap-2 rounded-md border bg-white/70 px-3 py-2 text-sm text-muted-foreground">
+                <Clock3 className="h-4 w-4 text-cyan-700" />
+                {nextTask?.estimatedHours ?? 2} focused hours
               </div>
               <div className="mt-5">
                 <div className="flex items-center justify-between text-sm font-semibold">
@@ -156,14 +178,14 @@ export default function DashboardPage() {
                     key={mode.id}
                     onClick={() => setFocus(mode.id)}
                     className={`rounded-md border px-3 py-3 text-left text-sm transition ${
-                      focus === mode.id ? "border-slate-950 bg-slate-950 text-white" : "bg-white hover:bg-slate-50"
+                      focus === mode.id ? "border-slate-950 bg-slate-950 text-white shadow-metal" : "bg-white/[0.72] hover:bg-white"
                     }`}
                   >
                     {mode.label}
                   </button>
                 ))}
               </div>
-              <div className="mt-5 rounded-lg border bg-slate-50 p-4">
+              <div className="mt-5 rounded-lg border bg-white/70 p-4 shadow-sm">
                 <p className="text-sm font-semibold">
                   <Term label="Gap to close">A gap is the difference between your current profile and what your goals may require you to build.</Term>:{" "}
                   {gapAnalysis.biggestGap}
@@ -194,8 +216,8 @@ export default function DashboardPage() {
                     <button
                       key={action.id}
                       onClick={() => toggleAction(action.id)}
-                      className={`flex items-start gap-3 rounded-lg border p-4 text-left transition ${
-                        done ? "border-emerald-200 bg-emerald-50" : "bg-white hover:border-primary/35"
+                      className={`flex items-start gap-3 rounded-lg border p-4 text-left transition hover:-translate-y-0.5 ${
+                        done ? "border-emerald-200 bg-emerald-50" : "bg-white/[0.72] hover:border-cyan-700/35 hover:bg-white"
                       }`}
                     >
                       {done ? <CheckCircle2 className="mt-0.5 h-5 w-5 text-emerald-600" /> : <Circle className="mt-0.5 h-5 w-5 text-muted-foreground" />}
@@ -227,8 +249,8 @@ export default function DashboardPage() {
                 {topTargets.map((university) => {
                   const logo = getUniversityLogoUrl(university);
                   return (
-                    <div key={university.id} className="min-w-44 rounded-lg border bg-white p-4">
-                      <div className="grid h-11 w-11 place-items-center overflow-hidden rounded-lg border bg-slate-50">
+                    <div key={university.id} className="min-w-44 rounded-lg border bg-white/[0.72] p-4 shadow-sm backdrop-blur">
+                      <div className="grid h-11 w-11 place-items-center overflow-hidden rounded-lg border bg-white">
                         {logo ? (
                           <Image src={logo} alt="" width={30} height={30} unoptimized className="object-contain" />
                         ) : (
@@ -240,7 +262,7 @@ export default function DashboardPage() {
                     </div>
                   );
                 })}
-                <Link href="/universities" className="grid min-w-44 place-items-center rounded-lg border border-dashed bg-white p-4 text-sm font-semibold text-muted-foreground">
+                <Link href="/universities" className="grid min-w-44 place-items-center rounded-lg border border-dashed bg-white/[0.65] p-4 text-sm font-semibold text-muted-foreground transition hover:border-cyan-700/40 hover:bg-white">
                   Add school
                 </Link>
               </div>

@@ -168,7 +168,7 @@ export default function OnboardingPage() {
   }
 
   return (
-    <main className="min-h-screen bg-slate-50">
+    <main className="app-noise min-h-screen">
       <div className="mx-auto max-w-5xl px-4 py-8 md:px-8">
         <div className="flex items-center justify-between gap-4">
           <Link href="/">
@@ -180,33 +180,38 @@ export default function OnboardingPage() {
           <Badge variant="info">Guided setup</Badge>
         </div>
 
-        <div className="mt-8">
-          <Badge variant="warning">Takes about 3 minutes</Badge>
-          <h1 className="mt-4 text-3xl font-bold tracking-normal md:text-4xl">Build your Admitify profile</h1>
-          <p className="mt-3 max-w-3xl text-muted-foreground">
-            Tell Admitify where you want to go, what you have already built, and how much time you can realistically spend each week.
+        <div className="hero-metal mt-8 p-6 md:p-8">
+          <div className="relative z-10">
+          <div className="flex flex-wrap gap-2">
+            <span className="metal-chip">3 minute setup</span>
+            <span className="metal-chip">Editable later</span>
+            <span className="metal-chip">Honest profile only</span>
+          </div>
+          <h1 className="mt-5 max-w-3xl text-3xl font-bold tracking-normal text-white md:text-5xl">Build the profile your roadmap can trust.</h1>
+          <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-300 md:text-base">
+            Admitify needs just enough context to create a useful plan: goals, current work, evidence, and weekly capacity.
           </p>
           <div className="mt-5 grid gap-3 md:grid-cols-3">
-            <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.02 }} className="rounded-lg border bg-white p-4">
-              <p className="flex items-center gap-2 text-sm font-semibold">
-                <Compass className="h-4 w-4 text-primary" />
+            <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.02 }} className="rounded-lg border border-white/10 bg-white/[0.08] p-4 backdrop-blur">
+              <p className="flex items-center gap-2 text-sm font-semibold text-white">
+                <Compass className="h-4 w-4 text-cyan-200" />
                 Goal first
               </p>
-              <p className="mt-2 text-sm leading-6 text-muted-foreground">Start with target schools and major, then work backward.</p>
+              <p className="mt-2 text-sm leading-6 text-slate-300">Start with target schools and major, then work backward.</p>
             </motion.div>
-            <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }} className="rounded-lg border bg-white p-4">
-              <p className="flex items-center gap-2 text-sm font-semibold">
-                <Sparkles className="h-4 w-4 text-primary" />
+            <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }} className="rounded-lg border border-white/10 bg-white/[0.08] p-4 backdrop-blur">
+              <p className="flex items-center gap-2 text-sm font-semibold text-white">
+                <Sparkles className="h-4 w-4 text-cyan-200" />
                 Useful, not perfect
               </p>
-              <p className="mt-2 text-sm leading-6 text-muted-foreground">You can leave fields rough and improve them later.</p>
+              <p className="mt-2 text-sm leading-6 text-slate-300">You can leave fields rough and improve them later.</p>
             </motion.div>
-            <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.14 }} className="rounded-lg border bg-white p-4">
-              <p className="flex items-center gap-2 text-sm font-semibold">
-                <ShieldCheck className="h-4 w-4 text-primary" />
+            <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.14 }} className="rounded-lg border border-white/10 bg-white/[0.08] p-4 backdrop-blur">
+              <p className="flex items-center gap-2 text-sm font-semibold text-white">
+                <ShieldCheck className="h-4 w-4 text-cyan-200" />
                 Honest only
               </p>
-              <p className="mt-2 text-sm leading-6 text-muted-foreground">Use real grades, real work, and proof you can verify.</p>
+              <p className="mt-2 text-sm leading-6 text-slate-300">Use real grades, real work, and proof you can verify.</p>
             </motion.div>
           </div>
           <div className="mt-6">
@@ -216,14 +221,15 @@ export default function OnboardingPage() {
                   key={item.name}
                   onClick={() => setStep(index)}
                   className={`rounded-md border px-3 py-1.5 text-xs font-semibold transition-colors ${
-                    index === step ? "border-primary bg-primary text-primary-foreground" : "bg-white text-muted-foreground hover:text-foreground"
+                    index === step ? "border-cyan-300 bg-cyan-300 text-slate-950" : "border-white/10 bg-white/[0.08] text-slate-300 hover:text-white"
                   }`}
                 >
                   {index + 1}. {item.name}
                 </button>
               ))}
             </div>
-            <Progress value={progress} />
+            <Progress value={progress} className="bg-white/15" />
+          </div>
           </div>
         </div>
 
@@ -237,11 +243,11 @@ export default function OnboardingPage() {
           >
             <Card className="mt-6">
               <CardHeader>
-                <CardTitle>{activeStep.title}</CardTitle>
+                <CardTitle className="text-xl">{activeStep.title}</CardTitle>
                 <CardDescription>
                   Step {step + 1} of {steps.length}: {activeStep.helper}
                 </CardDescription>
-                <div className="mt-3 rounded-lg border bg-teal-50 p-3 text-sm leading-6 text-teal-950">
+                <div className="mt-3 rounded-lg border border-cyan-100 bg-cyan-50 p-3 text-sm leading-6 text-cyan-950">
                   <span className="font-semibold">Why this matters: </span>
                   {activeStep.unlock}
                 </div>

@@ -57,11 +57,11 @@ export function AiCoachPanel({
   }
 
   return (
-    <Card className={cn("overflow-hidden border-primary/20 bg-[linear-gradient(135deg,#ffffff_0%,#f7fbfa_58%,#fff8e6_100%)] shadow-sm", className)}>
+    <Card className={cn("interactive-card overflow-hidden border-cyan-700/20 bg-[linear-gradient(135deg,#ffffff_0%,#f8fafc_58%,#eef6f8_100%)]", className)}>
       <CardHeader className={cn("flex-row items-start justify-between gap-4", compact && "p-4")}>
         <div>
           <div className="flex items-center gap-2">
-            <div className="grid h-8 w-8 place-items-center rounded-md bg-primary text-primary-foreground">
+            <div className="grid h-8 w-8 place-items-center rounded-md bg-slate-950 text-cyan-200">
               <BrainCircuit className="h-4 w-4" />
             </div>
             <CardTitle>{title}</CardTitle>
@@ -80,7 +80,7 @@ export function AiCoachPanel({
 
         {result ? (
           <div className="mt-5 grid gap-4">
-            <div className="rounded-lg border bg-white/80 p-4">
+            <div className="rounded-lg border bg-white/[0.78] p-4 shadow-sm">
               <div className="flex flex-wrap items-center gap-2">
                 <Badge variant={result.mode === "openai" ? "success" : "secondary"}>{result.mode === "openai" ? result.model : "Mock fallback"}</Badge>
                 <Badge variant="outline">Ethical guardrails on</Badge>
@@ -96,7 +96,7 @@ export function AiCoachPanel({
             </div>
 
             <div className="grid gap-3 lg:grid-cols-3">
-              <div className="rounded-lg border bg-white/80 p-4">
+              <div className="rounded-lg border bg-white/[0.78] p-4 shadow-sm">
                 <p className="flex items-center gap-2 text-sm font-semibold">
                   <BrainCircuit className="h-4 w-4 text-primary" />
                   Insight
@@ -107,7 +107,7 @@ export function AiCoachPanel({
                   ))}
                 </ul>
               </div>
-              <div className="rounded-lg border bg-white/80 p-4">
+              <div className="rounded-lg border bg-white/[0.78] p-4 shadow-sm">
                 <p className="flex items-center gap-2 text-sm font-semibold">
                   <CheckCircle2 className="h-4 w-4 text-primary" />
                   Next moves
@@ -118,7 +118,7 @@ export function AiCoachPanel({
                   ))}
                 </ul>
               </div>
-              <div className="rounded-lg border bg-white/80 p-4">
+              <div className="rounded-lg border bg-white/[0.78] p-4 shadow-sm">
                 <p className="flex items-center gap-2 text-sm font-semibold">
                   <ShieldCheck className="h-4 w-4 text-primary" />
                   Guardrails

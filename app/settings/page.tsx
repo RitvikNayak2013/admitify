@@ -115,8 +115,8 @@ export default function SettingsPage() {
                   key={university.id}
                   type="button"
                   onClick={() => toggleUniversity(university.id)}
-                  className={`rounded-lg border bg-white p-4 text-left transition-colors ${
-                    selected ? "border-primary ring-2 ring-primary/20" : "hover:border-primary/40"
+                  className={`rounded-lg border bg-white/[0.72] p-4 text-left shadow-sm transition ${
+                    selected ? "border-cyan-700 ring-2 ring-cyan-700/20" : "hover:border-cyan-700/40 hover:bg-white"
                   }`}
                 >
                   <div className="flex items-start justify-between gap-3">
@@ -137,7 +137,7 @@ export default function SettingsPage() {
           </CardContent>
         </Card>
 
-        <Card className="bg-emerald-50">
+        <Card className="border-emerald-200 bg-emerald-50/90">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-emerald-950">
               <Save className="h-5 w-5" />

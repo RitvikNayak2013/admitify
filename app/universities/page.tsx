@@ -66,23 +66,23 @@ export default function UniversitiesPage() {
   return (
     <AppShell title="Dream Universities" subtitle="Explore editable sample university profiles and add targets to your roadmap.">
       <div className="grid min-w-0 gap-5">
-        <Card className="overflow-hidden border-0 bg-slate-950 text-white shadow-soft">
-          <CardContent className="grid gap-5 p-6 lg:grid-cols-[1fr_180px] lg:items-end">
+        <Card className="hero-metal border-white/15">
+          <CardContent className="relative z-10 grid gap-5 p-6 lg:grid-cols-[1fr_180px] lg:items-end">
             <div>
               <Badge variant="warning">Editable sample data</Badge>
-              <h2 className="mt-4 text-2xl font-bold tracking-normal md:text-3xl">Build a focused dream-school list.</h2>
+              <h2 className="mt-4 text-2xl font-bold tracking-normal text-white md:text-3xl">Build a focused dream-school list.</h2>
               <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-300">
                 Search broadly, save only the schools you want the roadmap to plan around. All requirements here are sample planning data.
               </p>
             </div>
-            <div className="rounded-lg border border-white/10 bg-white/10 p-4">
-              <p className="text-4xl font-bold">{filtered.length}</p>
+            <div className="rounded-lg border border-white/10 bg-white/[0.08] p-4 backdrop-blur">
+              <p className="text-4xl font-bold text-white">{filtered.length}</p>
               <p className="mt-1 text-sm text-slate-300">matches</p>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="sticky top-20 z-20 bg-white/92 backdrop-blur-xl">
+        <Card className="sticky top-20 z-20 bg-white/[0.86] backdrop-blur-2xl">
           <CardContent className="space-y-4 p-4">
             <div className="grid gap-3 lg:grid-cols-[1fr_auto] lg:items-center">
               <div className="relative">
@@ -163,7 +163,7 @@ export default function UniversitiesPage() {
                   key={item}
                   onClick={() => setCountry(item)}
                   className={`shrink-0 rounded-md border px-3 py-2 text-sm font-semibold transition ${
-                    country === item ? "border-slate-950 bg-slate-950 text-white" : "bg-white text-muted-foreground hover:border-primary/40 hover:text-foreground"
+                    country === item ? "border-slate-950 bg-slate-950 text-white shadow-metal" : "bg-white/70 text-muted-foreground hover:border-cyan-700/40 hover:bg-white hover:text-foreground"
                   }`}
                 >
                   {item}
@@ -178,7 +178,7 @@ export default function UniversitiesPage() {
             const selected = profile.dreamUniversities.includes(university.id);
             const logo = getUniversityLogoUrl(university);
             return (
-              <Card key={university.id} className="interactive-card overflow-hidden bg-white">
+              <Card key={university.id} className="interactive-card overflow-hidden bg-white/[0.78]">
                 <CardHeader>
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex min-w-0 items-start gap-3">
